@@ -36,10 +36,11 @@ Die Standardkomponenten von Starlight zu überschreiben kann nützlich sein, wen
    ```astro
    ---
    // src/components/EmailLink.astro
-   import type { Props } from '@astrojs/starlight/props';
+   
+   const email = 'houston@example.com';
    ---
 
-   <a href="mailto:houston@example.com">Schreib mir</a>
+   <a href=`mailto:${email}`>Schreib mir</a>
    ```
 
 3. Sage Starlight, dass deine benutzerdefinierte Komponente in der Konfigurationsoption [`components`](/de/reference/configuration/#components) in `astro.config.mjs` verwendet werden soll:
@@ -70,34 +71,29 @@ Du kannst mit den Standard-UI-Komponenten von Starlight genauso arbeiten, wie du
 
 Das folgende Beispiel zeigt eine benutzerdefinierte Komponente, die einen E-Mail-Link zusammen mit der Standardkomponente `SocialIcons` rendert:
 
-```astro {4,8}
+```astro {3,7}
 ---
 // src/components/EmailLink.astro
-import type { Props } from '@astrojs/starlight/props';
 import Default from '@astrojs/starlight/components/SocialIcons.astro';
 ---
 
 <a href="mailto:houston@example.com">Schreib mir</a>
-<Default {...Astro.props}><slot /></Default>
+<Default><slot /></Default>
 ```
 
-Beim Rendern einer integrierten Komponente innerhalb einer benutzerdefinierten Komponente:
-
-- Verbreite `Astro.props` darin. Dadurch wird sichergestellt, dass es alle Daten erhält, die es zum Rendern benötigt.
-- Füge einen [`<slot />`](https://docs.astro.build/de/basics/astro-components/#slots) innerhalb der Standardkomponente hinzu. Dadurch wird sichergestellt, dass Astro weiß, wo die Komponente gerendert werden muss, wenn der Komponente untergeordnete Elemente übergeben werden.
+Wenn du eine eingebaute Komponente innerhalb einer benutzerdefinierten Komponente renderst, füge ein [`<slot />`](https://docs.astro.build/de/basics/astro-components/#slots) innerhalb der Standardkomponente hinzu. Dadurch wird sichergestellt, dass Astro weiß, wo die Komponente gerendert werden soll, wenn sie Kindelemente erhält.
 
 Wenn du die Komponenten [`PageFrame`](/de/reference/overrides/#pageframe) oder [`TwoColumnContent`](/de/reference/overrides/#twocolumncontent) wiederverwendst, die [benannte Slots](https://docs.astro.build/de/basics/astro-components/#benannte-slots) enthalten, musst du auch diese Slots [übertragen](https://docs.astro.build/de/basics/astro-components/#slots-weitergeben).
 
 Das folgende Beispiel zeigt eine benutzerdefinierte Komponente, die die Komponente `TwoColumnContent` wiederverwendet. Diese integrierte Komponente enthält einen zusätzlichen benannten Slot, nämlich `right-sidebar`, welcher übertragen werden muss:
 
-```astro {9}
+```astro {8}
 ---
 // src/components/CustomContent.astro
-import type { Props } from '@astrojs/starlight/props';
 import Default from '@astrojs/starlight/components/TwoColumnContent.astro';
 ---
 
-<Default {...Astro.props}>
+<Default>
 	<slot />
 	<slot name="right-sidebar" slot="right-sidebar" />
 </Default>
@@ -105,17 +101,16 @@ import Default from '@astrojs/starlight/components/TwoColumnContent.astro';
 
 ## Seitendaten verwenden
 
-Beim Überschreiben einer Starlight-Komponente erhält deine benutzerdefinierte Implementierung ein Standardobjekt `Astro.props`, das alle Daten für die aktuelle Seite enthält.
+Wenn du eine Starlight-Komponente überschreibst, kannst du auf das globale [`starlightRoute`-Objekt](/de/guides/route-data/) zugreifen, das alle Daten für die aktuelle Seite enthält.
 Dadurch kannst du diese Werte verwenden, um zu steuern, wie deine Komponentenvorlage gerendert wird.
 
-Beispielsweise kannst du die Frontmatter-Werte der Seite als `Astro.props.entry.data` lesen. Im folgenden Beispiel verwendet eine Ersatzkomponente [`PageTitle`](/de/reference/overrides/#pagetitle) dies, um den Titel der aktuellen Seite anzuzeigen:
+Im folgenden Beispiel zeigt eine Ersatzkomponente [`PageTitle`](/de/reference/overrides/#pagetitle) den Titel der aktuellen Seite an, wie er im Frontmatter des Inhalts festgelegt wird:
 
-```astro {5} "{title}"
+```astro {4} "{title}"
 ---
 // src/components/Title.astro
-import type { Props } from '@astrojs/starlight/props';
 
-const { title } = Astro.props.entry.data;
+const { title } = Astro.locals.starlightRoute.entry.data;
 ---
 
 <h1 id="_top">{title}</h1>
@@ -127,28 +122,27 @@ const { title } = Astro.props.entry.data;
 </style>
 ```
 
-Erfahre mehr über alle verfügbaren Requisiten in der [Komponenten-Ersetzung Referenz](/de/reference/overrides/#komponenteneigenschaften-props).
+Weitere Informationen zu allen verfügbaren Eigenschaften findest du in der [Routendaten-Referenz](/de/reference/route-data/).
 
 ### Nur auf bestimmten Seiten überschreiben
 
-Komponentenüberschreibungen gelten für alle Seiten. Du kannst jedoch bedingt mit Werten aus `Astro.props` rendern, um zu bestimmen, wann deine benutzerdefinierte Benutzeroberfläche, wann die Standardbenutzeroberfläche von Starlight oder sogar etwas völlig anderes angezeigt werden soll.
+Komponentenüberschreibungen gelten für alle Seiten. Du kannst jedoch bedingt mit Werten aus `starlightRoute` rendern, um zu bestimmen, wann deine benutzerdefinierte Benutzeroberfläche, wann die Standardbenutzeroberfläche von Starlight oder sogar etwas völlig anderes angezeigt werden soll.
 
 Im folgenden Beispiel zeigt eine Komponente, die Starlights [`Footer`](/de/reference/overrides/#fußzeile) überschreibt, nur auf der Startseite „Verwendet Starlight 🌟“ an und zeigt ansonsten auf allen anderen Seiten die Standardfußzeile an:
 
 ```astro
 ---
 // src/components/ConditionalFooter.astro
-import type { Props } from '@astrojs/starlight/props';
 import Default from '@astrojs/starlight/components/Footer.astro';
 
-const isHomepage = Astro.props.id === '';
+const isHomepage = Astro.locals.starlightRoute.id === '';
 ---
 
 {
 	isHomepage ? (
 		<footer>Verwendet Starlight 🌟</footer>
 	) : (
-		<Default {...Astro.props}>
+		<Default>
 			<slot />
 		</Default>
 	)

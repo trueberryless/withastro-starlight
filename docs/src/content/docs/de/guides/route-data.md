@@ -29,7 +29,7 @@ Der String `siteTitle` wird zum Beispiel verwendet, um den Titel der Seite anzuz
 
 Die Routendaten sind in den Astro-Komponenten über das Global `Astro.locals.starlightRoute` verfügbar:
 
-```astro title="beispiel.astro"
+```astro title="example.astro"
 ---
 const { siteTitle } = Astro.locals.starlightRoute;
 ---

@@ -12,7 +12,7 @@ In Astro-Komponenten greifst du auf die Routendaten von `Astro.locals.starlightR
 
 ```astro {4}
 ---
-// src/components/Individuell.astro
+// src/components/Custom.astro
 
 const { hasSidebar } = Astro.locals.starlightRoute;
 ---
