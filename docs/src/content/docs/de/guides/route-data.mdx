@@ -3,6 +3,8 @@ title: Routendaten
 description: Erfahre, wie das Seitendatenmodell von Starlight zum Rendern deiner Seiten verwendet wird und wie du es anpassen kannst.
 ---
 
+import { Steps } from '@astrojs/starlight/components';
+
 Wenn Starlight eine Seite in deiner Dokumentation rendert, erstellt es zunächst ein Routendatenobjekt, das den Inhalt der Seite darstellt.
 In diesem Leitfaden wird erklärt, wie Routendaten erzeugt werden, wie sie verwendet werden und wie du sie anpassen kannst, um das Standardverhalten von Starlight zu ändern.
 
@@ -13,7 +15,7 @@ Starlight-Routendaten sind ein Objekt, das für jede Seite deiner Website erstel
 1. Die Starlight-Konfiguration in `astro.config.mjs`
 2. Der Inhalt und das Frontmatter der aktuellen Seite
 
-Die Routendaten enthalten zum Beispiel eine Eigenschaft `siteTitle` mit einem Wert, der auf der Option [`title`](/de/reference/configuration/#title-erforderlich) in deiner Starlight-Konfiguration basiert, und eine Eigenschaft `toc`, die aus Überschriften im Inhalt der aktuellen Seite generiert wird.
+Routendaten enthalten zum Beispiel eine Eigenschaft `siteTitle` mit einem Wert, der auf der Option [`title`](/de/reference/configuration/#title-erforderlich) in deiner Starlight-Konfiguration basiert, und eine Eigenschaft `toc`, die aus Überschriften im Inhalt der aktuellen Seite generiert wird.
 
 Einige Funktionen können sowohl global in der Starlight-Konfiguration als auch für eine bestimmte Seite in Markdown Frontmatter konfiguriert werden.
 Die im Frontmatter für eine bestimmte Seite festgelegten Werte überschreiben in diesem Fall die globalen oder Standardwerte.
@@ -58,6 +60,8 @@ Bei Änderungen wie dieser müssen die Standardkomponenten von Starlight nicht g
 Du kannst die Routendaten mithilfe einer speziellen Form von „Middleware“ anpassen.
 Dies ist eine Funktion, die jedes Mal aufgerufen wird, wenn Starlight eine Seite rendert, und die Werte im Routendatenobjekt ändern kann.
 
+<Steps>
+
 1. Erstelle eine neue Datei, die eine `onRequest`-Funktion mit Starlights `defineRouteMiddleware()`-Dienstprogramm exportiert:
 
    ```ts
@@ -75,12 +79,12 @@ Dies ist eine Funktion, die jedes Mal aufgerufen wird, wenn Starlight eine Seite
    import starlight from '@astrojs/starlight';
 
    export default defineConfig({
-     integrations: [
-       starlight({
-         title: 'Meine wunderbare Dokumentationswebsite',
-         routeMiddleware: './src/routeData.ts',
-       }),
-     ],
+   	integrations: [
+   		starlight({
+   			title: 'Meine wunderbare Dokumentationswebsite',
+   			routeMiddleware: './src/routeData.ts',
+   		}),
+   	],
    });
    ```
 
@@ -96,9 +100,11 @@ Dies ist eine Funktion, die jedes Mal aufgerufen wird, wenn Starlight eine Seite
    import { defineRouteMiddleware } from '@astrojs/starlight/route-data';
 
    export const onRequest = defineRouteMiddleware((context) => {
-     // Hol dir den Eintrag der Inhaltssammlung für diese Seite.
-     const { entry } = context.locals.starlightRoute;
-     // Aktualisiere den Titel, um ein Ausrufezeichen hinzuzufügen.
-     entry.data.title = entry.data.title + '!';
+   	// Hol dir den Eintrag der Inhaltssammlung für diese Seite.
+   	const { entry } = context.locals.starlightRoute;
+   	// Aktualisiere den Titel, um ein Ausrufezeichen hinzuzufügen.
+   	entry.data.title = entry.data.title + '!';
    });
    ```
+
+</Steps>
