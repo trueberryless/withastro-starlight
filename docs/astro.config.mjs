@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
+import starlightSpellChecker from 'starlight-spell-checker';
 import markdocGrammar from './grammars/markdoc.tmLanguage.json';
 
 export const locales = {
@@ -182,14 +183,17 @@ export default defineConfig({
 				},
 			],
 			expressiveCode: { shiki: { langs: [markdocGrammar] } },
-			plugins: process.env.CHECK_LINKS
-				? [
-						starlightLinksValidator({
-							errorOnFallbackPages: false,
-							errorOnInconsistentLocale: true,
-						}),
-					]
-				: [],
+			plugins: [
+				...(process.env.CHECK_LINKS
+					? [
+							starlightLinksValidator({
+								errorOnFallbackPages: false,
+								errorOnInconsistentLocale: true,
+							}),
+						]
+					: []),
+				...(process.env.CHECK_SPELLING ? [starlightSpellChecker()] : []),
+			],
 		}),
 	],
 });
