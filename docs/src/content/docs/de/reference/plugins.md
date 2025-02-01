@@ -25,6 +25,10 @@ interface StarlightPlugin {
       config: StarlightUserConfig;
       updateConfig: (newConfig: StarlightUserConfig) => void;
       addIntegration: (integration: AstroIntegration) => void;
+      addRouteMiddleware: (config: {
+        entrypoint: string;
+        order?: 'pre' | 'post';
+      }) => void;
       astroConfig: AstroConfig;
       command: 'dev' | 'build' | 'preview';
       isRestart: boolean;
@@ -115,6 +119,40 @@ export default {
   },
 };
 ```
+
+#### `addRouteMiddleware`
+
+**Typ:** `(config: { entrypoint: string; order?: 'pre' | 'post' }) => void`
+
+Eine Callback-Funktion, um der Website einen [Routen-Middleware-Handler](/de/guides/route-data/) hinzuzufügen.
+
+Die Eigenschaft `entrypoint` muss ein Modulbezeichner für die Middleware-Datei deines Plugins sein, die einen `onRequest`-Handler exportiert.
+
+Im folgenden Beispiel fügt ein Plugin, das unter dem Namen `@example/starlight-plugin` veröffentlicht wurde, eine Route-Middleware über einen npm-Modul-Spezifizierer hinzu:
+
+```js {6-9}
+// plugin.ts
+export default {
+  name: '@example/starlight-plugin',
+  hooks: {
+    setup({ addRouteMiddleware }) {
+      addRouteMiddleware({
+        entrypoint: '@example/starlight-plugin/route-middleware',
+      });
+    },
+  },
+};
+```
+
+##### Kontrolle der Ausführungsreihenfolge
+
+Standardmäßig wird die Plugin-Middleware in der Reihenfolge ausgeführt, in der die Plugins hinzugefügt werden.
+
+Verwende die optionale Eigenschaft `order`, wenn du mehr Kontrolle darüber brauchst, wann deine Middleware läuft.
+Setze `order: "pre"`, um vor der Middleware eines Benutzers zu laufen.
+Setze `order: "post"`, um nach allen anderen Middlewares zu laufen.
+
+Wenn zwei Plugins Middleware mit demselben `order`-Wert hinzufügen, wird das zuerst hinzugefügte Plugin zuerst ausgeführt.
 
 #### `astroConfig`
 
