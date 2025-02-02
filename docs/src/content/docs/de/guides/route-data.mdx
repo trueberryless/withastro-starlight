@@ -139,9 +139,9 @@ Das kann z.B. nützlich sein, um zu warten, bis die Middleware eines Plugins lä
 import { defineRouteMiddleware } from '@astrojs/starlight/route-data';
 
 export const onRequest = defineRouteMiddleware(async (context, next) => {
-	// Wait for later middleware to run.
+	// Warte darauf, dass die spätere Middleware ausgeführt wird.
 	await next();
-	// Modify route data.
+	// Ändere die Routendaten.
 	const { entry } = context.locals.starlightRoute;
 	entry.data.title = entry.data.title + '!';
 });
