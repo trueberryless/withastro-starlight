@@ -17,6 +17,7 @@ Erfahre mehr über die Verwendung eines Starlight-Plugins in der [Konfigurations
 Ein Starlight-Plugin hat die folgende Form.
 Siehe unten für Details zu den verschiedenen Eigenschaften und Hook-Parametern.
 
+<!-- prettier-ignore-start -->
 ```ts
 interface StarlightPlugin {
   name: string;
@@ -25,21 +26,17 @@ interface StarlightPlugin {
       config: StarlightUserConfig;
       updateConfig: (newConfig: StarlightUserConfig) => void;
       addIntegration: (integration: AstroIntegration) => void;
-      addRouteMiddleware: (config: {
-        entrypoint: string;
-        order?: 'pre' | 'post';
-      }) => void;
+      addRouteMiddleware: (config: { entrypoint: string; order?: 'pre' | 'post' | 'default' }) => void;
       astroConfig: AstroConfig;
       command: 'dev' | 'build' | 'preview';
       isRestart: boolean;
       logger: AstroIntegrationLogger;
-      injectTranslations: (dict: {
-        [lang: string]: Record<string, string>;
-      }) => void;
+      injectTranslations: (dict: { [lang: string]: Record<string, string> }) => void;
     }) => void | Promise<void>;
   };
 }
 ```
+<!-- prettier-ignore-end -->
 
 ## `name`
 
@@ -124,7 +121,7 @@ export default {
 
 #### `addRouteMiddleware`
 
-**Typ:** `(config: { entrypoint: string; order?: 'pre' | 'post' }) => void`
+**Typ:** `(config: { entrypoint: string; order?: 'pre' | 'post' | 'default'}) => void`
 
 Eine Callback-Funktion, um der Website einen [Routen-Middleware-Handler](/de/guides/route-data/) hinzuzufügen.
 
