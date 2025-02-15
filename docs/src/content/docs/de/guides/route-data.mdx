@@ -6,32 +6,23 @@ description: Erfahre, wie das Seitendatenmodell von Starlight zum Rendern deiner
 import { Steps } from '@astrojs/starlight/components';
 
 Wenn Starlight eine Seite in deiner Dokumentation rendert, erstellt es zunächst ein Routendatenobjekt, das den Inhalt der Seite darstellt.
-In diesem Leitfaden wird erklärt, wie Routendaten erzeugt werden, wie sie verwendet werden und wie du sie anpassen kannst, um das Standardverhalten von Starlight zu ändern.
+In diesem Leitfaden wird erklärt, wie Routendaten erzeugt werden, wie du sie verwendest und wie du sie anpassen kannst, um das Standardverhalten von Starlight zu ändern.
+
+Eine vollständige Liste der verfügbaren Eigenschaften findest du in der [„Routendaten-Referenz“](/de/reference/route-data/).
 
 ## Was sind Routendaten?
 
-Starlight-Routendaten sind ein Objekt, das für jede Seite deiner Website erstellt wird, indem die folgenden Teile deines Projekts kombiniert werden:
+Starlight-Routendaten sind ein Objekt, das alle Informationen enthält, die zum Rendern einer einzelnen Seite benötigt werden.
+Es enthält Informationen für die aktuelle Seite sowie Daten, die aus deiner Starlight-Konfiguration generiert werden.
 
-1. Die Starlight-Konfiguration in `astro.config.mjs`
-2. Der Inhalt und das Frontmatter der aktuellen Seite
+## Routendaten verwenden
 
-Routendaten enthalten zum Beispiel eine Eigenschaft `siteTitle` mit einem Wert, der auf der Option [`title`](/de/reference/configuration/#title-erforderlich) in deiner Starlight-Konfiguration basiert, und eine Eigenschaft `toc`, die aus Überschriften im Inhalt der aktuellen Seite generiert wird.
+Alle Starlight-Komponenten verwenden Routendaten, um zu entscheiden, was für jede Seite gerendert werden soll.
+Zum Beispiel wird die Zeichenkette [`siteTitle`](/de/reference/route-data/#sitetitle) verwendet, um den Titel der Seite anzuzeigen, und das Array [`sidebar`](/de/reference/route-data/#sidebar) wird verwendet, um die globale Navigation der Seitenleiste darzustellen.
 
-Einige Funktionen können sowohl global in der Starlight-Konfiguration als auch für eine bestimmte Seite in Markdown Frontmatter konfiguriert werden.
-Die im Frontmatter für eine bestimmte Seite festgelegten Werte überschreiben in diesem Fall die globalen oder Standardwerte.
-Die Routendaten enthalten zum Beispiel ein `pagination`-Objekt mit Links zu den vorherigen und nächsten Seiten in der Seitenleiste.
-Wenn eine Seite eine dieser Funktionen deaktiviert, z.B. durch die Einstellung `prev: false` im Frontmatter, wird dies im Objekt `pagination` reflektiert.
+Du kannst auf diese Daten über das Global `Astro.locals.starlightRoute` in Astro-Komponenten zugreifen:
 
-Eine vollständige Liste der verfügbaren Eigenschaften findest du in der [„Routedaten Referenz“](/de/reference/route-data/).
-
-## Wie werden die Routendaten verwendet?
-
-Alle Starlight-Komponenten haben Zugriff auf die Routendaten und verwenden sie, um zu entscheiden, was für jede Seite gerendert werden soll
-Der String `siteTitle` wird zum Beispiel verwendet, um den Titel der Seite anzuzeigen, und das Array `sidebar` wird verwendet, um die globale Seitennavigation darzustellen.
-
-Die Routendaten sind in den Astro-Komponenten über das Global `Astro.locals.starlightRoute` verfügbar:
-
-```astro title="example.astro"
+```astro title="example.astro" {2}
 ---
 const { siteTitle } = Astro.locals.starlightRoute;
 ---
@@ -39,7 +30,7 @@ const { siteTitle } = Astro.locals.starlightRoute;
 <p>Der Titel dieser Seite lautet „{siteTitle}“</p>
 ```
 
-Wenn du eine [Komponenten ersetzt](/de/guides/overriding-components/), kannst du auf Routendaten wie diese zugreifen, um die Anzeige anzupassen.
+Das kann zum Beispiel nützlich sein, wenn du [Komponentenüberschreibungen](/de/guides/overriding-components/) erstellst, um die Anzeige anzupassen.
 
 ## Anpassen der Routendaten
 
@@ -90,7 +81,7 @@ Dies ist eine Funktion, die jedes Mal aufgerufen wird, wenn Starlight eine Seite
 
 3. Aktualisiere deine `onRequest`-Funktion, um die Routendaten zu ändern.
 
-   Das erste Argument, das die Middleware erhält, ist [Astros `context`-Objekt](https://docs.astro.build/de/reference/api-reference/).
+   Das erste Argument, das deine Middleware erhält, ist [Astros `context`-Objekt](https://docs.astro.build/de/reference/api-reference/).
    Es enthält alle Informationen über die aktuell gerenderte Seite, einschließlich der aktuellen URL und `locals`.
 
    In diesem Beispiel werden wir unsere Dokumente spannender machen, indem wir ein Ausrufezeichen am Ende jedes Seitentitels hinzufügen.
