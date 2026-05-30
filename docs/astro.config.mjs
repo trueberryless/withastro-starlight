@@ -49,6 +49,7 @@ export default defineConfig({
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/withastro/starlight' },
 				{ icon: 'discord', label: 'Discord', href: 'https://astro.build/chat' },
 			],
+			credits: true,
 			head: [
 				{
 					tag: 'script',

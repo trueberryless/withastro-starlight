@@ -240,7 +240,7 @@ These components are rendered at the bottom of the main column of page content.
 **Default component:** [`Footer.astro`](https://github.com/withastro/starlight/blob/main/packages/starlight/components/Footer.astro)
 
 Footer component displayed at the bottom of each page.
-The default implementation displays [`<LastUpdated />`](#lastupdated), [`<Pagination />`](#pagination), and [`<EditLink />`](#editlink).
+The default implementation displays [`<LastUpdated />`](#lastupdated), [`<EditLink />`](#editlink), [`<Pagination />`](#pagination), and [`<Credits />`](#credits).
 
 #### `LastUpdated`
 
@@ -259,3 +259,9 @@ Component rendered in the page footer to display a link to where the page can be
 **Default component:** [`Pagination.astro`](https://github.com/withastro/starlight/blob/main/packages/starlight/components/Pagination.astro)
 
 Component rendered in the page footer to display navigation arrows between previous/next pages.
+
+#### `Credits`
+
+**Default component:** [`Credits.astro`](https://github.com/withastro/starlight/blob/main/packages/starlight/components/Credits.astro)
+
+Component rendered in the page footer to display a "Built with Starlight" badge, if [`credits`](/reference/configuration/#credits) is enabled.

@@ -260,6 +260,12 @@ export function ComponentConfigSchema() {
 			 * @see {@link https://github.com/withastro/starlight/blob/main/packages/starlight/components/EditLink.astro `EditLink` default implementation}
 			 */
 			EditLink: z.string().default('@astrojs/starlight/components/EditLink.astro'),
+			/**
+			 * Component rendered in the page footer to display a "Built with Starlight" badge, if {@link https://starlight.astro.build/reference/configuration/#credits `credits`} is enabled.
+			 *
+			 * @see {@link https://github.com/withastro/starlight/blob/main/packages/starlight/components/Credits.astro `Credits` default implementation}
+			 */
+			Credits: z.string().default('@astrojs/starlight/components/Credits.astro'),
 		})
 		.prefault({});
 }

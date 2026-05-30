@@ -65,6 +65,10 @@ declare module 'virtual:starlight/components/EditLink' {
 	const EditLink: typeof import('./components/EditLink.astro').default;
 	export default EditLink;
 }
+declare module 'virtual:starlight/components/Credits' {
+	const EditLink: typeof import('./components/Credits.astro').default;
+	export default EditLink;
+}
 
 declare module 'virtual:starlight/components/Header' {
 	const Header: typeof import('./components/Header.astro').default;

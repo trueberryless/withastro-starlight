@@ -17,6 +17,7 @@ test('parses bare minimum valid config successfully', () => {
 		  "components": {
 		    "Banner": "@astrojs/starlight/components/Banner.astro",
 		    "ContentPanel": "@astrojs/starlight/components/ContentPanel.astro",
+		    "Credits": "@astrojs/starlight/components/Credits.astro",
 		    "DraftContentNotice": "@astrojs/starlight/components/DraftContentNotice.astro",
 		    "EditLink": "@astrojs/starlight/components/EditLink.astro",
 		    "FallbackContentNotice": "@astrojs/starlight/components/FallbackContentNotice.astro",
