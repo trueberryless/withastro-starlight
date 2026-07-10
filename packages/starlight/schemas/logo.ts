@@ -23,6 +23,3 @@ export const LogoConfigSchema = () =>
 			}),
 		])
 		.optional();
-
-export type LogoUserConfig = z.input<ReturnType<typeof LogoConfigSchema>>;
-export type LogoConfig = z.output<ReturnType<typeof LogoConfigSchema>>;

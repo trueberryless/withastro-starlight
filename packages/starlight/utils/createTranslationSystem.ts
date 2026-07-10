@@ -10,7 +10,7 @@ import type { UserI18nKeys, UserI18nSchema } from './translations';
  * All translations handled by Starlight are stored in the same namespace and Starlight always use
  * a new instance of i18next configured for this namespace.
  */
-export const I18nextNamespace = 'starlight' as const;
+const I18nextNamespace = 'starlight' as const;
 
 export async function createTranslationSystem<T extends i18nSchemaOutput>(
 	config: Pick<StarlightConfig, 'defaultLocale' | 'locales'>,

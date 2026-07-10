@@ -31,7 +31,7 @@ export interface SidebarAutoLink extends SidebarManualLink {
 	autogenerate: SidebarAutogenerateRouteData;
 }
 
-export interface SidebarManualGroup {
+interface SidebarManualGroup {
 	type: 'group';
 	label: string;
 	entries: (SidebarLink | SidebarGroup)[];

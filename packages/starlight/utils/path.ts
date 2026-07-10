@@ -10,13 +10,6 @@ export function ensureTrailingSlash(href: string): string {
 	return href;
 }
 
-/** Ensure the passed path starts and ends with slashes. */
-export function ensureLeadingAndTrailingSlashes(href: string): string {
-	href = ensureLeadingSlash(href);
-	href = ensureTrailingSlash(href);
-	return href;
-}
-
 /** Ensure the passed path does not start with a leading slash. */
 export function stripLeadingSlash(href: string) {
 	if (href[0] === '/') href = href.slice(1);

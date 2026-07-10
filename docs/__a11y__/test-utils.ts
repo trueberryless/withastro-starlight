@@ -7,7 +7,7 @@ import { A11yReportAttachmentName } from './constants';
 // the latter does not play well with Playwright.
 import lunariaConfig from '../lunaria.config.json' with { type: 'json' };
 
-export { expect, type Locator } from '@playwright/test';
+export { expect } from '@playwright/test';
 
 const config: Config = {
 	axe: {

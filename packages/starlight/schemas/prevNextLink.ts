@@ -14,5 +14,4 @@ export const PrevNextLinkConfigSchema = () =>
 		])
 		.optional();
 
-export type PrevNextLinkUserConfig = z.input<ReturnType<typeof PrevNextLinkConfigSchema>>;
 export type PrevNextLinkConfig = z.output<ReturnType<typeof PrevNextLinkConfigSchema>>;

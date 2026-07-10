@@ -2,7 +2,7 @@ import { ExpressiveCodeTheme, type ThemeObjectOrShikiThemeName } from 'astro-exp
 import nightOwlDark from './themes/night-owl-dark.jsonc?raw';
 import nightOwlLight from './themes/night-owl-light.jsonc?raw';
 
-export type BundledThemeName = 'starlight-dark' | 'starlight-light';
+type BundledThemeName = 'starlight-dark' | 'starlight-light';
 
 export type ThemeObjectOrBundledThemeName = ThemeObjectOrShikiThemeName | BundledThemeName;
 

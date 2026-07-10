@@ -12,7 +12,7 @@ import { createPluginTestOptions, docFileURL } from '../test-utils';
  * links, RTL code support, directive restoration) run on both, so the shared test suites below run
  * against each of them via {@link describeEachProcessor}.
  */
-export const processorNames = ['unified', 'satteri'] as const;
+const processorNames = ['unified', 'satteri'] as const;
 export type ProcessorName = (typeof processorNames)[number];
 
 export async function createStarlightMarkdownProcessor(
