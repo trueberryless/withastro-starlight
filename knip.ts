@@ -8,7 +8,6 @@ const config: KnipConfig = {
     "packages/*": {}
   },
   ignore: [
-    "packages/starlight/__tests__/snapshot-serializer-astro-error.ts",
     "packages/starlight/components-internals/SidebarPersistState.ts",
     "packages/starlight/utils/createTranslationSystem.ts"
   ]

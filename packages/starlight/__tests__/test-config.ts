@@ -1,6 +1,7 @@
 /// <reference types="vitest" />
 
 import type { AstroConfig } from 'astro';
+import { fileURLToPath } from 'node:url';
 import { getViteConfig } from 'astro/config';
 import { vitePluginStarlightVirtualModules } from '../integrations/vite-virtual-modules';
 import { runPlugins, type StarlightUserConfigWithPlugins } from '../utils/plugins';
@@ -43,7 +44,9 @@ export async function defineVitestConfig(
 			),
 		],
 		test: {
-			snapshotSerializers: ['../snapshot-serializer-astro-error.ts'],
+		  snapshotSerializers: [
+        fileURLToPath(new URL('./snapshot-serializer-astro-error.ts', import.meta.url))
+      ],
 		},
 	});
 }
