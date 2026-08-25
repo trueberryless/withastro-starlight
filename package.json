@@ -23,7 +23,7 @@
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.6.0",
-    "knip": "^6.25.0",
+    "knip": "^6.32.2",
     "pkg-pr-new": "^0.0.86",
     "prettier": "3.3.3",
     "prettier-plugin-astro": "^0.14.1",
